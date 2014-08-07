@@ -1,0 +1,12 @@
+
+UID - פרסומת קוד
+StationId  - מזהה תחנה
+ProgramType - סוג תוכנית
+ProgramName - שם התוכנית
+LocalTime - זמן מקומי של התחנה
+
+Tweet - (time limited nice to have) - 
+
+Post - 
+
+Advanced show in website -  how to?
