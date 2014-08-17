@@ -1,5 +1,6 @@
 // app/routes.js
-var api 			= require('./facebook')
+
+var FB 			= require('./facebook')
 var User       		= require('./models/user');
 var Mapping       		= require('./models/mapping');
 var Advert       		= require('./models/advert');
@@ -85,7 +86,7 @@ module.exports = function(app, passport, bodyParser , io) {
 	// FACEBOOK ROUTES =====================
 	// =====================================
 	// route for facebook authentication and login
-	app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['read_stream', 'publish_actions', 'email'] }));
+	app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['read_stream', 'publish_actions', 'email']}));
 
 	// handle the callback after facebook has authenticated the user
 	app.get('/auth/facebook/callback',
@@ -104,20 +105,19 @@ module.exports = function(app, passport, bodyParser , io) {
 	app.post('/post', function(req, res) {
 			console.log(req.body);
 		console.log(req.body.message);
-	User.findOne({ 'facebook.id' : req.body.id }, function(err, user) {
-
-	        	// if there is an error, stop everything and return that
-	        	// ie an error connecting to the database
-	            if (err)
-	                return done(err);
-
-				// if the user is found, then log them in
-	            if (user) {
-	                // Call function that contains API call to post on Facebook (see facebook.js)
-					api.postMessage(user.facebook.token, req.body.message, res);
-	            } 	
-		;	
-	});
+		User.findOne({ 'facebook.id' : req.body.id }, function(err, user) {
+	
+		        	// if there is an error, stop everything and return that
+		        	// ie an error connecting to the database
+		            if (err)
+		                return done(err);
+	
+					// if the user is found, then log them in
+		            if (user) {
+		                // Call function that contains API call to post on Facebook (see facebook.js)
+						FB.postMessage(user.facebook.token, req.body.message, res);
+		            } 	
+		});
 	});
 	
 	// =====================================
@@ -187,7 +187,7 @@ module.exports = function(app, passport, bodyParser , io) {
 	// facebook -------------------------------
 
 		// send to facebook to do the authentication
-		app.get('/connect/facebook', passport.authorize('facebook', { scope : 'email' }));
+		app.get('/connect/facebook', passport.authorize('facebook', { scope: ['read_stream', 'publish_actions', 'email'] }));
 
 		// handle the callback after facebook has authorized the user
 		app.get('/connect/facebook/callback',
@@ -208,13 +208,13 @@ module.exports = function(app, passport, bodyParser , io) {
 				failureRedirect : '/home'
 			}));
 			
-			
-// =============================================================================
-// UNLINK ACCOUNTS =============================================================
-// =============================================================================
-// used to unlink accounts. for social accounts, just remove the token
-// for local account, remove email and password
-// user account will stay active in case they want to reconnect in the future
+				
+	// =============================================================================
+	// UNLINK ACCOUNTS =============================================================
+	// =============================================================================
+	// used to unlink accounts. for social accounts, just remove the token
+	// for local account, remove email and password
+	// user account will stay active in case they want to reconnect in the future
 
     // local -----------------------------------
     app.get('/unlink/local', function(req, res) {
@@ -386,10 +386,10 @@ module.exports = function(app, passport, bodyParser , io) {
 	});
 	
 	// =============================================================================
-// EVENT ====================================================================
-// =============================================================================
-// used to map account to advertisment
- app.post('/event', function(req, res) {
+	// EVENT ====================================================================
+	// =============================================================================
+	// used to map account to advertisment
+	 app.post('/event', function(req, res) {
  		
 		var event 			= new Event();
 		event.uid			= req.body.uid;
@@ -409,13 +409,35 @@ module.exports = function(app, passport, bodyParser , io) {
 			}
 			if(!mapping)
 			{
+					
 					io.sockets.clients().forEach(function (socket) {
 					console.log("socket"+ socket);
 					console.log("socket.stationId"+ socket.stationId);
 					if(socket.stationId == req.body.stationId.valueOf())
 					{
-						
-						socket.emit('update', '<div class="thumbnail"><img src="images/news_thumbnail.gif" width="250" height="126" alt="Thumbnail Caption" />');
+					var events =	Event.find({"stationId" : req.body.stationId.valueOf()}).sort().limit(10);
+							
+						events.exec(function(err, result)
+						{
+							if(err)
+								return console.log(err);
+								
+							result.forEach(function(event)
+							
+							{
+								Advert.findOne(event.uid, function(err,advert)
+								{
+									if(err)
+										console.log(err);
+										
+									setTimeout(function() {
+										socket.emit('update', advert.html);
+									}, 20000/*miliseconds*/);
+								
+								});	
+							});
+							});
+							
 					}
 					
 				});	
@@ -432,15 +454,17 @@ module.exports = function(app, passport, bodyParser , io) {
         });
 		Advert.findOne({ 'uid' : req.body.uid }, function(err, advert) {
 			if (err)
+			{
 				res.send(err);
+				return;
+			}
+			
 			 message =  advert.message;
 			 link = advert.link;
 			 advert.isActive = true;
 			 var htmlAdvert = advert.html;
 			console.log(advert);
 
-			 console.log("htmlllllll" + htmlAdvert);
-	//	io.sockets.stationId(req.body.stationId).emit('update', advert.html);
 		io.sockets.clients().forEach(function (socket) {
 			console.log("socket"+ socket);
 			console.log("socket.stationId"+ socket.stationId);
@@ -456,30 +480,38 @@ module.exports = function(app, passport, bodyParser , io) {
 	
 		User.findById(localId, function(err, user) {
 			if (err)
+			{
 				res.send(err);
-		
-		console.log("message" + message);
-		console.log("localId" + localId);
+				return;
+			}
 		console.log(user);
-		var T = new Twit({
-		consumer_key:         configAuth.twitterAuth.consumerKey
-	  , consumer_secret:      configAuth.twitterAuth.consumerSecret
-	  , access_token:         user.twitter.token
-	  , access_token_secret:   user.twitter.tokenSecret
-	})
-
-	
-	T.post('statuses/update', { status: message + " "  + link + " was played at" + event.programName }, function(err, data, response) {
-		if (err) return res.send(err);
-	  
-	  // Generate output
-    //var output = '<p>Message has been posted to your twitter.</p>';
-      //output += '<pre>' + JSON.stringify(data, null, '\t') + '</pre>';
-      
-      // Send output as the response
-      //response.writeHeader(200, {'Content-Type': 'text/html'});
-      //response.end(output);
-	})
+		if(user.twitter)
+		{
+				var T = new Twit({
+				consumer_key:         configAuth.twitterAuth.consumerKey
+			  , consumer_secret:      configAuth.twitterAuth.consumerSecret
+			  , access_token:         user.twitter.token
+			  , access_token_secret:   user.twitter.tokenSecret
+			});
+		
+			//	}
+			T.post('statuses/update', { status: message + " "  + link + " was played at" + event.programName }, function(err, data, response) {
+				if (err) return res.send(err);
+			  
+			  // Generate output
+				 //var output = '<p>Message has been posted to your twitter.</p>';
+		      //output += '<pre>' + JSON.stringify(data, null, '\t') + '</pre>';
+		      
+		      // Send output as the response
+		      //response.writeHeader(200, {'Content-Type': 'text/html'});
+		      //response.end(output);
+			});
+		}
+		if(user.facebook)
+		{
+			console.log("fb user" + user.facebook);
+			FB.postMessage(user.facebook.token, "ya seichas ohueu", res);
+		}
 		});
 		});
     });
@@ -489,7 +521,10 @@ module.exports = function(app, passport, bodyParser , io) {
 	app.get('/banner/:uid',function(req, res) {
 	Advert.findOne({ 'uid' : req.params.uid }, function(err, advert) {
 			if (err)
+			{
 				res.send(err);
+				return;
+			}
 			//res.send(advert,html);
 		});
 	});
@@ -508,7 +543,7 @@ function isLoggedIn(req, res, next) {
 	res.redirect('/home');
 }
 
-function makeTweet(cb) {
+/*function makeTweet(cb) {
   if (!cb.token) {
     console.error("You didn't have the user log in first");
   }
@@ -520,4 +555,4 @@ function makeTweet(cb) {
   , { "status": "How to Tweet & Direct Message using NodeJS http://blog.coolaj86.com/articles/how-to-tweet-from-nodejs.html via @coolaj86" }
   , cb
   );
-}
+}*/

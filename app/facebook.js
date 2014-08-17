@@ -17,12 +17,12 @@ function postMessage(access_token, message, response) {
       if (body.error) return console.error("Error returned from facebook: ", body.error);
 
       // Generate output
-      var output = '<p>Message has been posted to your feed. Here is the id generated:</p>';
+     /* var output = '<p>Message has been posted to your feed. Here is the id generated:</p>';
       output += '<pre>' + JSON.stringify(body, null, '\t') + '</pre>';
       
       // Send output as the response
       response.writeHeader(200, {'Content-Type': 'text/html'});
-      response.end(output);
+      response.end(output);*/
     });
 
 }

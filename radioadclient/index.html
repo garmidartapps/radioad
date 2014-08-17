@@ -86,6 +86,7 @@
           	socket.emit('stationId',134);
         });
         socket.on('update', function(data) {
+          alert(data);
             $('#loading').html(data);
         });
 		
