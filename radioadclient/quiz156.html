@@ -1,0 +1,194 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<title>Online Quiz</title>
+<script src="jquery-1.11.1.js"></script>
+<script type="text/Javascript">
+
+var rightAnswer=new Array();
+var questPerPage=2;
+var answer1=false;
+var answer2=false;
+var loginStatus=false;
+
+var quests=Array("The ad starts with the dad saying","What does the dad do for a bedtime story?","At Hooked On Phonics website you can learn how to …","Hooked On Phonics helps you to get your child to","The ad mentions the following tool  ","Hooked On Phonics helps your child to","What is the best place in cyberspace for help");
+var answers=Array();
+answers[0]=Array(1,"One story, then is bedtime","Time to go to bed","Let’s go to sleep now","Let me read you a few stories")
+answers[1]=Array(1,"Invents a story","Reads a story","Plays a song","Shows a movie")
+answers[2]=Array(1,"Help your child become a more confident reader","Read bedside stories to your child","Go to bed earlier","Sleep tighter")
+answers[3]=Array(1,"Love reading","Tell bedside stories","Play a song","Sleep better")
+answers[4]=Array(1,"Free personal reading assessment","Spell checker","Drawing maker","Sleep better")
+answers[5]=Array(1,"Become a more confident reader","Sleep better","Love bedside stories","Tell bedside stories")
+answers[6]=Array(1,"The Hooked on Phonics website","The pentagon","U.S. Department of Education","Ministry of Education")
+
+
+function showQuestion(){
+htmlStr="";
+for(qpp=0;qpp<questPerPage;qpp++){
+
+q=Math.floor(Math.random()*quests.length)
+htmlStr+="Q#"+qpp+": "+quests[q]+"<br>A: ";
+
+rightAnswer[qpp]=answers[q][0]-1;
+
+for(a=1;a<answers[q].length;a++){
+htmlStr+="<input name='ansr"+qpp+"' type='radio' value=''><label>"+answers[q][a]+"</label>  "
+}
+htmlStr+="<p>";
+}
+document.getElementById("myQuiz").innerHTML=htmlStr
+}
+
+function check(){
+for (ra=0;ra<rightAnswer.length;ra++){
+radios=document.getElementsByName("ansr"+ra)
+if (radios[rightAnswer[ra]].checked){
+if(ra===1)
+{
+  answer1 = true;
+}
+else
+{
+  answer2=true;
+}
+}else{
+alert("The Answer#"+ra+" is incorrect");
+}
+}
+if(answer1 == true && answer2 == true)
+{
+  alert("Your answers are correct!! To get an even better coupon share it on facebook");
+  $('#coupon').html('<div class="thumbnail"><img src="images/25percent.gif" alt="Thumbnail Caption" />');
+}
+//showQuestion()
+}
+
+ // This is called with the results from from FB.getLoginStatus().
+  function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    // The response object is returned with a status field that lets the
+    // app know the current login status of the person.
+    // Full docs on the response object can be found in the documentation
+    // for FB.getLoginStatus().
+    if (response.status === 'connected') {
+      // Logged into your app and Facebook.
+      testAPI();
+      if(answer1 === true && answer2 === true)
+      {
+        postMessage();
+        	$('#coupon').html('<div class="thumbnail"><img src="images/50percent.gif" alt="Thumbnail Caption" />');
+      }
+      
+    } else if (response.status === 'not_authorized') {
+      // The person is logged into Facebook, but not your app.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this app.';
+    } else {
+      // The person is not logged into Facebook, so we're not sure if
+      // they are logged into this app or not.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into Facebook.';
+    }
+  }
+
+  // This function is called when someone finishes with the Login
+  // Button.  See the onlogin handler attached to it in the sample
+  // code below.
+  function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  }
+
+  window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '253190524878455',
+    cookie     : true,  // enable cookies to allow the server to access 
+                        // the session
+    xfbml      : true,  // parse social plugins on this page
+    version    : 'v2.1' // use version 2.1
+  });
+
+  // Now that we've initialized the JavaScript SDK, we call 
+  // FB.getLoginStatus().  This function gets the state of the
+  // person visiting this page and can return one of three states to
+  // the callback you provide.  They can be:
+  //
+  // 1. Logged into your app ('connected')
+  // 2. Logged into Facebook, but not your app ('not_authorized')
+  // 3. Not logged into Facebook and can't tell if they are logged into
+  //    your app or not.
+  //
+  // These three cases are handled in the callback function.
+
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+  // Here we run a very simple test of the Graph API after login is
+  // successful.  See statusChangeCallback() for when this call is made.
+  function testAPI() {
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('/me', function(response) {
+      console.log('Successful login for: ' + response.name);
+      document.getElementById('status').innerHTML =
+        'Thanks for logging in, ' + response.name + '!';
+        loginStatus =true;
+    });
+  }
+  function postMessage(){
+    FB.api('/me/feed', 'post', { message: "I just won a BannerSnack coupon try it too!! https://radiohead-c9-garmidart.c9.io/quiz156.html" }, function(response) {
+  if (!response || response.error) {
+    //alert('Error occured');
+  } else {
+    alert('Post ID: ' + response.id);
+  }
+});
+  }
+</script>
+</head>
+
+<body>
+
+<h1>Quiz:</h1>
+<form id="myQuiz" action="">
+
+
+</form>
+<form action="">
+	<input onclick="check()" name="Button1" type="button" value="Check"></form>
+<script>
+showQuestion()
+</script>
+
+
+
+<!--
+  Below we include the Login Button social plugin. This button uses
+  the JavaScript SDK to present a graphical Login button that triggers
+  the FB.login() function when clicked.
+-->
+
+<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+</fb:login-button>
+
+<div id="status">
+</div>
+<div id="coupon" class="thumbnail"><img src="images/10percent.gif" alt="Thumbnail Caption" ></div>
+</body>
+
+</html>
+

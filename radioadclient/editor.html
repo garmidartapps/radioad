@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Radio Station</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+<script src="jquery-1.11.1.js"></script>
+<script src="spotty.js"></script>
+<script type="text/javascript" src="tinymce/tinymce.min.js"></script>
+<style type="text/css">
+		table.gradienttable th {
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d5e3e4', endColorstr='#b3c8cc',GradientType=0 );
+			position: relative;
+			z-index: -1;
+		}
+		table.gradienttable td {
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebecda', endColorstr='#ceceb7',GradientType=0 );
+			position: relative;
+			z-index: -1;
+		}
+	</style>
+	<![endif]-->
+
+<!-- CSS goes in the document HEAD or added to your external stylesheet -->
+<style type="text/css">
+table.gradienttable {
+	font-family: verdana,arial,sans-serif;
+	font-size:11px;
+	color:#999;
+	border-width: 1px;
+	border-color: #999999;
+	table-layout:fixed;
+	width: 200px;
+}
+table.gradienttable th {
+	padding: 0px;
+	background: #d5e3e4;
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2Q1ZTNlNCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjQwJSIgc3RvcC1jb2xvcj0iI2NjZGVlMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNiM2M4Y2MiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+	background: -moz-linear-gradient(top,  #d5e3e4 0%, #ccdee0 40%, #b3c8cc 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#d5e3e4), color-stop(40%,#ccdee0), color-stop(100%,#b3c8cc));
+	background: -webkit-linear-gradient(top,  #d5e3e4 0%,#ccdee0 40%,#b3c8cc 100%);
+	background: -o-linear-gradient(top,  #d5e3e4 0%,#ccdee0 40%,#b3c8cc 100%);
+	background: -ms-linear-gradient(top,  #d5e3e4 0%,#ccdee0 40%,#b3c8cc 100%);
+	background: linear-gradient(to bottom,  #d5e3e4 0%,#ccdee0 40%,#b3c8cc 100%);
+	border: 1px solid #999999;
+}
+table.gradienttable td {
+	padding: 0px;
+	background: #ebecda;
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ViZWNkYSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjQwJSIgc3RvcC1jb2xvcj0iI2UwZTBjNiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNjZWNlYjciIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+	background: -moz-linear-gradient(top,  #ebecda 0%, #e0e0c6 40%, #ceceb7 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ebecda), color-stop(40%,#e0e0c6), color-stop(100%,#ceceb7));
+	background: -webkit-linear-gradient(top,  #ebecda 0%,#e0e0c6 40%,#ceceb7 100%);
+	background: -o-linear-gradient(top,  #ebecda 0%,#e0e0c6 40%,#ceceb7 100%);
+	background: -ms-linear-gradient(top,  #ebecda 0%,#e0e0c6 40%,#ceceb7 100%);
+	background: linear-gradient(to bottom,  #ebecda 0%,#e0e0c6 40%,#ceceb7 100%);
+	border: 1px solid #999999;
+}
+table.gradienttable th p{
+	margin:0px;
+	padding:8px;
+	border-top: 1px solid #eefafc;
+	border-bottom:0px;
+	border-left: 1px solid #eefafc;
+	border-right:0px;
+}
+table.gradienttable td p{
+	margin:0px;
+	padding:8px;
+	border-top: 1px solid #fcfdec;
+	border-bottom:0px;
+	border-left: 1px solid #fcfdec;;
+	border-right:0px;
+}
+</style>
+<script type="text/javascript">
+tinymce.init({
+    theme_advanced_disable : "Formats",
+    selector: "textarea",
+    toolbar: [
+        "undo redo | underline bold italic | link image | alignleft aligncenter alignright",
+    ],
+	  plugins: ["image",
+	  "link" ],
+	    rel_list: [
+        {title: 'None', value: ''},
+        {title: 'Lightbox', value: 'lightbox'}
+    ],
+    image_advtab: true,
+    entity_encoding : "raw", //"named",
+    //entities : "160,nbsp",
+	remove_linebreaks : false,
+    image_class_list: [
+        {title: 'None', value: ''}
+    ]
+ });
+ 
+
+function doRequest(url) {
+
+    // Create the XHR object.
+    var xhr = new XMLHttpRequest();
+    if ("withCredentials" in xhr) {
+        // XHR for Chrome/Firefox/Opera/Safari.
+        xhr.open('get', url, true);
+    }else if(typeof XDomainRequest != "undefined") {
+        // XDomainRequest for IE.
+        xhr = new XDomainRequest();
+        xhr.open('get', url);
+    }else{
+        // CORS not supported.
+        xhr = null;
+    };
+
+    if (!xhr) {
+        return;
+    };
+
+    // Response handlers.
+    xhr.onload = function() {
+        //do what you want with the response. Remember to use xhr.responseText for ie8 compatibility, because it doesn't have .responseXML
+        if(xhr.responseXML) {
+            xml = this.responseXML;
+            alert(xml);
+        }else if(xhr.responseText){
+            xml.loadXML(xhr.responseText);
+        };
+    };
+
+    xhr.onerror = function(ex) {
+       alert(ex);
+        //do what you want on error
+    };
+
+    //these blank handlers need to be set to fix ie9 http://cypressnorth.com/programming/internet-explorer-aborting-ajax-requests-fixed/
+    xhr.onprogress = function () { };
+    xhr.ontimeout = function () { };
+
+    //do it, wrapped in timeout to fix ie9
+    setTimeout(function () {
+                xhr.send();
+            }, 0);
+
+}
+
+function getXMLValueByPath(nodepath, data)
+{
+    //console.log(data);
+    var result = data.evaluate(nodepath, data, null, XPathResult.STRING_TYPE, null);
+    console.log(result.stringValue);
+    return result;
+}
+
+function updateHistory(data)
+{
+     	$("#spot-table").find('tbody')//.insertBefore('table > tbody > tr:first')
+		    .prepend($('<tr>')
+		        .append($('<td>')
+		            .append($('<img>')
+		                .attr('src', 'he/favicon.ico')
+		            )
+		        ).append($('<td>')
+		            .append($(data)
+		              
+		            )
+		        )
+		    );  
+}
+function getCurrentProgramName(evalue){
+    site = 'http://www.interweb.idc.ac.il/radioidc1.xml';
+
+
+var yql = 'http://query.yahooapis.com/v1/public/yql?q=' + encodeURIComponent('select * from xml where url="' + site + '"') + '&format=xml&callback=?';
+
+
+// Request that YSQL string, and run a callback function.
+// Pass a defined function to prevent cache-busting.
+$.getJSON(yql, function (data) {
+    var parser=new DOMParser();
+  var xmlDoc=parser.parseFromString(data.results[0],"text/xml");
+   //var xmlDoc =  data.results[0];
+     evalue = getXMLValueByPath('/BroadcastMonitor/Current/ProgramName', xmlDoc);
+    $("#programName").text(evalue.stringValue);
+    var titleName = getXMLValueByPath('/BroadcastMonitor/Current/titleName', xmlDoc);
+    $("#titleName").text(titleName.stringValue);
+});
+}
+
+ function submitForm() {
+var evalue;
+ 
+//sample site that returns xml
+ //updateHistory(tinymce.get('question_text').getContent());
+//$('.topline').html(tinymce.get('question_text').getContent());
+ tinymce.triggerSave();
+ console.log(tinymce.get('question_text').getContent() + "trigger");
+ var xmlhttp = new XMLHttpRequest();
+ xmlhttp.open("POST","html",true);
+ xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+ 
+ //xmlhttp.send("html="+tinymce.get('question_text').getContent());
+ 
+ var editor_content=tinymce.get('question_text').getContent();
+ var el = document.createElement( 'div' );
+ el.innerHTML = editor_content;
+ var images = el.getElementsByTagName( 'img' ); // Live NodeList of the IMG elements
+ 
+ var relId = "lightbox[" + new Date().getTime().toString() + "]";
+ 
+ var found;
+ do {
+	 for (var i = 0, found=false; i < images.length; i++) {
+      var image = images[i];
+	  var parentElement = image.parentElement;
+	  if (parentElement.nodeName == "A") {
+		continue;
+	  }
+	  found=true;
+	  var a = document.createElement('a');
+	  a.href = image.getAttribute('src');
+	  a.rel=relId;
+	  a.title = image.alt;
+	  parentElement.insertBefore(a, image); 
+	  a.appendChild(image);
+	  
+	  break;
+	  }
+  } while (found)
+  
+  editor_content = el.innerHTML;
+  
+  //var ec_decoded = editor_content.replace(/(&nbsp;)*/g, "");
+  
+ //editor_content=editor_content.deentityify();
+ editor_content = encodeURIComponent(editor_content);
+ 
+ xmlhttp.send("html="+ editor_content);
+
+ 
+ tinymce.activeEditor.setContent('');
+ getCurrentProgramName(evalue);
+};
+
+Function.prototype.method = function (name, func) {
+    this.prototype[name] = func;
+    return this;
+};
+
+String.method('deentityify', function ( ) {
+// The entity table. It maps entity names to
+// characters.
+var entity = {
+quot: '"',
+lt: '<',
+gt: '>',
+amp: '&'
+};
+// Return the deentityify method.
+return function ( ) {
+// This is the deentityify method. It calls the string
+// replace method, looking for substrings that start
+// with '&' and end with ';'. If the characters in
+// between are in the entity table, then replace the
+// entity with the character from the table. It uses
+// a regular expression (Chapter 7).
+return this.replace(/&([^&;]+);/g,
+function (a, b) {
+var r = entity[b];
+return typeof r === 'string' ? r : a;
+}
+);
+};
+}( ));
+
+
+
+
+</script>
+<link rel="stylesheet" href="spotty.css" type="text/css"/>
+<link rel="stylesheet" type="text/css" href="elegant.css">
+</head>
+<body class="elegant-aero" onLoad="getCurrentProgramName()">
+<!-- "//www.spot.im/embed/scripts/launcher.js" -->
+
+<form action="" method="post" class="form">
+    <h1><h1 id="programName">Radio Station </h1>
+        <span id="titleName"></span>
+    </h1>
+    <label>
+        <span>Message :</span>
+        <textarea name="question_text" id="question_text"></textarea>
+        <input type="hidden" id="question_html" name="question_html" />
+    </label> 
+     <label>
+        <span>&nbsp;</span> 
+        <input type="button" class="button" onclick="submitForm();" value="Send" /> 
+    </label> 
+</form>
+    <!--    <div  id="spotlement-aug" > 
+				<table id="spot-table" class="gradienttable">
+				<tbody>
+				<tr>
+						<td><img src="he/favicon.ico" /></td>
+						<td class="topline" style="width:800px">
+						</td>
+					</tr>	
+					
+				</tbody>
+				</table>
+			</div> -->
+
+
+</body>
+</html>

@@ -1,13 +1,16 @@
 // app/routes.js
 
-var FB 			= require('./facebook')
-var User       		= require('./models/user');
+var FB 					= require('./facebook')
+var User       			= require('./models/user');
 var Mapping       		= require('./models/mapping');
 var Advert       		= require('./models/advert');
 var Event       		= require('./models/event');
+var Html 				= require('./models/message');
+var rest 				= require('./xmlhttprequest');
 //var twit			= require('./tweeter');
 var Twit = require('twit');
 var configAuth = require('../config/auth');
+var YQL = require('yql');
 
 
 module.exports = function(app, passport, bodyParser , io) {
@@ -31,7 +34,7 @@ module.exports = function(app, passport, bodyParser , io) {
 
 	// process the login form
 	app.post('/login', passport.authenticate('local-login', {
-		successRedirect : '/profile', // redirect to the secure profile section
+		successRedirect : '/editor.html', // redirect to the secure profile section
 		failureRedirect : '/login', // redirect back to the signup page if there is an error
 		failureFlash : true // allow flash messages
 	}));
@@ -311,8 +314,84 @@ module.exports = function(app, passport, bodyParser , io) {
 		});
 	});
 
+//=============================================================================
+//========================HTML=================================================
+//=============================================================================
+app.post('/html', function(req, res) {
 
+	 var site = 'http://www.interweb.idc.ac.il/radioidc1.xml';
+    /*var yql = 'http://query.yahooapis.com/v1/public/yql?q=' + encodeURIComponent('select * from xml where url="' + site + '"') + '&format=xml&callback=?';
+       
+       var options = {
+		    host: yql,
+		    method: 'GET'
+		    
+		};
+		rest.res.gegetXML(options,
+       function(statusCode, result)
+        {
+            // I could work with the result html/json here.  I could also just return it
+            console.log("onResult: (" + statusCode + ")" + result);
+        });*/
+        var doc = new Html();
+		doc.html = req.body.html;
+        var query = new YQL('select * from xml where url="' + site + '"');
+        query.exec(function (error, response) {
+            if (response.error) {
+	    	console.log("Example #1... Error: " + response.error.description);
+    	}
+    	    else
+    	    {
+    	    	if(response.query.results.BroadcastMonitor.Current.ProgramName)
+    	    	{
+	                doc.programName = response.query.results.BroadcastMonitor.Current.ProgramName;
+	                	console.log(doc.programName);
+	                  doc.save(function(err) {
+	        			 res.json({ message: 'Html created!' });
+	    			 });
+    	    	}
+    	    }
+        });
 	
+		
+	
+        	
+        	io.sockets.clients().forEach(function (socket) {
+				socket.emit('showhtml', doc.html);
+        	});
+      
+    });
+	
+// =============================================================================
+// UNDO Operation for an editor ====================================================================
+// =============================================================================
+app.post('/undoLast', function(req, res) {
+    	io.sockets.clients().forEach(function (socket) {
+				socket.emit('undoLast', '');
+        	});
+   
+   			var programName = req.body.programName;
+   
+        	
+        	Html.find({'programName' : programName}).sort('timestamp', 2).limit(1).remove().exec();
+        	
+        	
+});
+	
+// =============================================================================
+// UNDO Operation for an editor ====================================================================
+// =============================================================================
+
+app.post('/flush', function(req, res) {
+    	io.sockets.clients().forEach(function (socket) {
+				socket.emit('flush', '');
+        	});
+        	var programName = req.body.programName;
+        	Html.find({'programName' : programName}).remove().exec();
+        	
+        	
+});	
+
 	
 // =============================================================================
 // ADVERTS ====================================================================
@@ -396,11 +475,12 @@ module.exports = function(app, passport, bodyParser , io) {
 		event.stationId		= req.body.stationId;
 		event.programId		= req.body.programId;
 		event.programName	= req.body.programName;
-		event.localTime		= req.body.localTime;
+		event.localTime		= req.body.localTime !== null ? req.body.localTime : 0;
 		var localId;
 		var message = "";
 		var link = "";
-		
+		var	delay = req.body.delay !== null ? req.body.delay : 0;
+		setTimeout(function() {
 		Mapping.findOne({ 'uid' : event.uid }, function(err, mapping) {
 			if (err)
 			{
@@ -414,25 +494,28 @@ module.exports = function(app, passport, bodyParser , io) {
 					console.log("socket"+ socket);
 					console.log("socket.stationId"+ socket.stationId);
 					if(socket.stationId == req.body.stationId.valueOf())
+					
 					{
-					var events =	Event.find({"stationId" : req.body.stationId.valueOf()}).sort().limit(10);
+						
+					socket.emit('update', '<div class="thumbnail"><img src="images/main_thumbnail.png" alt="Thumbnail Caption" />');	//FIXME temp fix   width="250" height="126"
+					var events =	Event.find({"stationId" : req.body.stationId.valueOf()}).sort([['localTime', 'descending']]).limit(10);
 							
 						events.exec(function(err, result)
 						{
 							if(err)
 								return console.log(err);
-								
+								var timeout = 10000;
 							result.forEach(function(event)
 							
 							{
 								Advert.findOne(event.uid, function(err,advert)
 								{
+									timeout = timeout + 10000;
 									if(err)
 										console.log(err);
+									/*	 setTimeout(function(){socket.emit('update', advert.html);}, timeout);*/
 										
-									setTimeout(function() {
-										socket.emit('update', advert.html);
-									}, 20000/*miliseconds*/);
+
 								
 								});	
 							});
@@ -441,9 +524,9 @@ module.exports = function(app, passport, bodyParser , io) {
 					}
 					
 				});	
-				 res.json({ message: 'Eb Tvou Mat' });
+				 res.json({ message: 'Nothing Found' });
 				return;
-			}
+			}// if !mapping
 			
 				console.log(mapping.local);
 			 localId = mapping.local;
@@ -453,16 +536,21 @@ module.exports = function(app, passport, bodyParser , io) {
             res.json({ message: 'Event created!' });
         });
 		Advert.findOne({ 'uid' : req.body.uid }, function(err, advert) {
-			if (err)
+			if (err )
 			{
 				res.send(err);
 				return;
 			}
+			if(!advert)
+			{
+				return;
+			}
 			
-			 message =  advert.message;
-			 link = advert.link;
+			
+			 link = advert.link !== null ? advert.link : "";
+			 message =  advert.message !== null ? advert.message : "";
 			 advert.isActive = true;
-			 var htmlAdvert = advert.html;
+			 var htmlAdvert = advert.html !== null ? advert.html : "";
 			console.log(advert);
 
 		io.sockets.clients().forEach(function (socket) {
@@ -472,11 +560,12 @@ module.exports = function(app, passport, bodyParser , io) {
 			{
 				console.log("found the one"+htmlAdvert);
 				socket.emit('update', htmlAdvert);
+				socket.emit('button', link);
 			}
 			
 		});
 			
-		});
+
 	
 		User.findById(localId, function(err, user) {
 			if (err)
@@ -495,7 +584,7 @@ module.exports = function(app, passport, bodyParser , io) {
 			});
 		
 			//	}
-			T.post('statuses/update', { status: message + " "  + link + " was played at" + event.programName }, function(err, data, response) {
+			T.post('statuses/update', { status:message + " " + link + " was played at " + event.programName + " on " +event.localTime }, function(err, data, response) {
 				if (err) return res.send(err);
 			  
 			  // Generate output
@@ -510,11 +599,13 @@ module.exports = function(app, passport, bodyParser , io) {
 		if(user.facebook)
 		{
 			console.log("fb user" + user.facebook);
-			FB.postMessage(user.facebook.token, "ya seichas ohueu", res);
+			FB.postMessage(user.facebook.token, message + " " + link + " was played at " + event.programName + " on " +event.localTime, res);
 		}
 		});
 		});
     });
+		}, delay*1000);//MainTimeOut
+	 });
 	
 	
 	// get the advert with that id (accessed at GET http://localhost:8080/banner/:uid)
@@ -542,17 +633,3 @@ function isLoggedIn(req, res, next) {
 	// if they aren't redirect them to the home page
 	res.redirect('/home');
 }
-
-/*function makeTweet(cb) {
-  if (!cb.token) {
-    console.error("You didn't have the user log in first");
-  }
-  oa.post(
-    "https://api.twitter.com/1.1/statuses/update.json"
-  , cb.token
-  , cb.tokenSecret
-  // We just have a hard-coded tweet for now
-  , { "status": "How to Tweet & Direct Message using NodeJS http://blog.coolaj86.com/articles/how-to-tweet-from-nodejs.html via @coolaj86" }
-  , cb
-  );
-}*/

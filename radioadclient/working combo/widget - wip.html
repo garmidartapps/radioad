@@ -1,0 +1,280 @@
+
+<!DOCTYPE html>
+<html dir="rtl" lang="he-IL">
+	
+	<head>  
+   		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+						
+		<link rel="icon" type="image/ico" href="he/Spotlement_logo_100x60.png"/>  <!-- href="he/favicon.ico"/ -->
+		<title>עכשיו בשידור - רדיו ספוטלימנט</title>
+		
+		<link rel="stylesheet" href="he/pop-up-player.css" type="text/css" media="screen" />
+		<link rel="stylesheet" id="_tk-fontawesome-css" href="he/font-awesome.min.css?ver=3.8.1" type="text/css" media="all">
+		<meta property="og:image" content="he/fb-thumbnail-logo.png" /> <!-- facebook share logo thumbnail -->
+		
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script><!-- גם הסקריפטים של הנגן וגם של שם התכנית ושמות השירים צריכים את זה -->
+						
+		<link type="text/css" href="he/circle.player.css" rel="stylesheet"/>
+		<script type="text/javascript" src="he/jquery.jplayer.js"></script>
+		<script type="text/javascript" src="he/jquery.transform2d.js"></script>
+		<script type="text/javascript" src="he/jquery.grab.js"></script>
+		<script type="text/javascript" src="he/mod.csstransforms.min.js"></script>
+		<script type="text/javascript" src="he/circle.player.js"></script>
+
+		<script type="text/javascript" src="he/getXMLUpdates.js"></script>
+		<script type="text/javascript" src="he/media_forest.js"></script>
+		<style type="text/css">
+		#limit {
+			max-height: 10px;
+		}
+		</style>
+		<!-- script> <!- - idc radio he google analytics - - >
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		  ga('create', 'UA-16583792-2', 'auto');
+		  ga('send', 'pageview');
+		</script -->
+	</head>
+	
+	<body>
+
+		<div id="live-player-page">
+	
+			<div id="live-player-header">
+				<a href="/he/" id="live-player-logo" target="_blank"><img src="he/spotlement_logo_100x60.png" alt="logo" title="1062fm.co.il" width="105" height="55"></a><!--src="he/site-menu_idc-logo.png"-->
+			</div>
+		
+			<div id="live-player">
+				
+				<table border="0"> <!-- social links -->
+				<tbody>
+				<tr>
+					<td valign="top"> <!-- twitter -->
+						<span style="position: relative; top: 1px;"><a href="https://twitter.com/share" class="twitter-share-button" data-count="none">Tweet</a></span>
+						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+					</td>
+					
+					<!-- td valign="top"> <!- - facbook share player url - - >
+						<div id="fb-root"></div>
+							<script>
+							(function(d, s, id) {
+								  var js, fjs = d.getElementsByTagName(s)[0];
+								  if (d.getElementById(id)) return;
+								  js = d.createElement(s); js.id = id;
+								  js.src = "http://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+								  fjs.parentNode.insertBefore(js, fjs);
+							}(document, 'script', 'facebook-jssdk'));
+							</script>
+						<div class="fb-share-button" data-href="http://1062fm.co.il/he/player" data-layout="button"></div>
+					</td>
+					
+					<td valign="top"> <!- - facbook like our fb page - - >
+						<!- - use the script from above the share button - - >
+						<div class="fb-like" data-href="https://www.facebook.com/1062FM" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></div>
+					</td -->
+				</tr>
+				</tbody>
+				</table>
+		
+				<h1><i class="fa fa-volume-up"></i>SPOTLEMENT עכשיו בשידור</h1>
+				
+				<!-- SPOTLEMENT player code -->
+				<div id="SPOTLEMENT-live-player-element">	
+
+				<audio controls src="http://50.22.217.113:32684/;"></audio> 
+				<!-- div id="live-player-element">	
+				<!- - Player code Begins here - - >
+					
+					<script type="text/javascript">
+					//<![CDATA[
+
+					$(document).ready(function(){
+
+						/*
+						 * Instance CirclePlayer inside jQuery doc ready
+						 *
+						 * CirclePlayer(jPlayerSelector, media, options)
+						 *   jPlayerSelector: String - The css selector of the jPlayer div.
+						 *   media: Object - The media object used in jPlayer("setMedia",media).
+						 *   options: Object - The jPlayer options.
+						 *
+						 * Multiple instances must set the cssSelectorAncestor in the jPlayer options. Defaults to "#cp_container_1" in CirclePlayer.
+						 *
+						 * The CirclePlayer uses the default supplied:"m4a, oga" if not given, which is different from the jPlayer default of supplied:"mp3"
+						 * Note that the {wmode:"window"} option is set to ensure playback in Firefox 3.6 with the Flash solution.
+						 * However, the OGA format would be used in this case with the HTML solution.
+						 */
+						var myCirclePlayer = new CirclePlayer("#jquery_jplayer_1",
+						{
+							mp3: "http://192.117.143.154:8000/idc123.mp3"
+						}, {
+							cssSelectorAncestor: "#cp_container_1",
+							swfPath: "http://1062fm.co.il/he/wp-content/admin-folder/jplayer/",
+							keyEnabled: true,
+							supplied: "mp3",
+							
+							canplay: function() {
+							$("#jquery_jplayer_1").jPlayer("play");
+							}
+							
+						});
+					});
+					//]]>
+					
+					</script>
+				
+					<!- - The jPlayer div must not be hidden. Keep it at the root of the body element to avoid any such problems. - - >
+					<div id="jquery_jplayer_1" class="cp-jplayer"></div>
+
+					<!- - The container for the interface can go where you want to display it. Show and hide it as you need. - - >
+
+					<div id="cp_container_1" class="cp-container">
+						<div class="cp-circle-control"></div>
+						<ul class="cp-controls">
+							<li><a class="cp-play" tabindex="1">play</a></li>
+							<li><a class="cp-pause" style="display:none;" tabindex="1">pause</a></li> <!- - Needs the inline style here, or jQuery.show() uses display:inline instead of display:block - - >
+						</ul>
+					</div>
+				
+				<!- - Player code Ends here -->
+				
+			</div>
+			
+			
+			<!-- div id="CurrentProgram" align="center"-->
+			<div  align="center">
+			<p align="center">שם התוכנית: דאג וטוני - מיסטר איקס</p>
+			</div>
+			<!-- Media forest HTML Code Begins here -->
+			
+			<div class="media-forest" > 
+				
+				<p align="right"><b>שיר נוכחי:</b></p>
+				
+				<table>
+				<tbody>
+				
+					<tr>
+						<td><img src="he/Atom_Heart_Mother.jpg" /></td>
+						<td><ul>
+								<li><b><span>PINK FLOYD</span></b></li>
+								<li><span>ATOM HEART MOTHER</span></li> 
+								<!-- שעת התחלה של ניגון השיר <li><span id="stime_7"></span></li> -->
+						</ul></td>
+					</tr>
+					
+				</tbody>
+				</table>
+									
+				<p align="right"><b>שירים אחרונים:</b></p>
+				
+				<table>
+				<tbody>
+				
+					<tr>
+						<td><img src="he/Endless_River.jpg" /></td>
+						<td><ul>
+								<li><b><span>PINK FLOYD</span></b></li>
+								<li><span>THINGS LEFT UNSAID</span></li> 
+								<!-- שעת התחלה של ניגון השיר <li><span id="stime_7"></span></li> -->
+						</ul></td>
+					</tr>
+					<tr>
+						<td><img src="he/Endless_River.jpg" /></td>
+						<td><ul>
+								<li><b><span>PINK FLOYD</span></b></li>
+								<li><span>EBB AND FLOW</span></li> 
+								<!-- שעת התחלה של ניגון השיר <li><span id="stime_7"></span></li> -->
+						</ul></td>
+					</tr>
+					<tr>
+						<td><img src="he/Endless_River.jpg" /></td>
+						<td><ul>
+								<li><b><span>PINK FLOYD</span></b></li>
+								<li><span>UNSUNG</span></li> 
+								<!-- שעת התחלה של ניגון השיר <li><span id="stime_7"></span></li> -->
+						</ul></td>
+					</tr>
+					<tr>
+						<td><img src="he/Endless_River.jpg" /></td>
+						<td><ul>
+								<li><b><span>PINK FLOYD</span></b></li>
+								<li><span>ON NOODLE STREET</span></li> 
+								<!-- שעת התחלה של ניגון השיר <li><span id="stime_7"></span></li> -->
+						</ul></td>
+					</tr>
+					<tr>
+						<td><img src="he/Endless_River.jpg" /></td>
+						<td><ul>
+								<li><b><span>PINK FLOYD</span></b></li>
+								<li><span>AUTUMN '68</span></li> 
+								<!-- שעת התחלה של ניגון השיר <li><span id="stime_7"></span></li> -->
+						</ul></td>
+					</tr>
+						
+				</tbody>
+				</table>
+			</div>			
+			<div class="media-forest"  >
+
+			<p align="right"><b>דבר המערכת:</b></p>
+			<div  id="spotlement-aug" > <!-- wrapper to hide scrollbar -->
+				<table >
+				<tbody>
+				<tr>
+						<td><img src="he/favicon.ico" /></td>
+						<td><ul>
+								<li><b><span>
+								<a href="http://www.rollingstone.com/music/albumreviews/blue-19710805" target="_blank">Indulge yourself with this classic article about PINK FLOYD's blue album, </a>&nbsp; or check out the latest <a href="https://www.youtube.com/watch?v=XdpTGFZSgfA" target="_blank">PINK FLOYD concert</a></span></b></li>
+						</ul></td>
+					</tr>				
+
+					<tr>
+						<td><img src="he/favicon.ico" /></td>
+						<td><ul>
+								<li><b><span>
+								האם אלבום האוסף הראשון אי פעם של ג'וני מיטשל הוא לא יותר מאשר ארבעה פלייליסטים על דיסק?
+								<a href="https://www.youtube.com/watch?v=XdpTGFZSgfA" target="_blank"> מה אתם חושבים?</a></span></b></li>
+						</ul></td>
+					</tr>
+					
+				</tbody>
+				</table>
+			</div> <!-- wrapper to hide scrollbar -->
+			</div>
+
+			</div>
+			
+			
+			<!-- Media forest HTML Code Ends here -->
+			
+			
+			<!-- Credits -->
+			
+			<div id="credits-background">
+			
+				<div id="credits" align="center">
+			
+					<p>© SPOTLEMENT</p>
+<!--
+					<p>
+						אתר זה מופעל תחת <a href="http://www.acum.org.il/" target="_blank">רישיון אקו"ם</a>
+						<img class="right" src="he/acum.png">
+					</p>
+					
+					<p>
+						<a href="http : //mediaforest. biz/" target="_blank"><img class="right" src="he/media-forest.png" width="100px" border="0"></a></br>
+						<a href="http : //mediaforest. biz/" target="_blank">Powered by Media Forest</a>
+					</p>
+			-->		
+				</div>						
+			</div>
+			
+		</div>
+	
+	</body>
+</html>

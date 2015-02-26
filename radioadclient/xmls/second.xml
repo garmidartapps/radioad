@@ -1,0 +1,195 @@
+This XML file does not appear to have any style information associated with it. The document tree is shown below.
+<BroadcastMonitor>
+<updated>2015-02-15T14:00:27.017</updated>
+<stationName>Radio IDC 1</stationName>
+<playStatus>PLAYING</playStatus>
+<Previous>
+<startTime>2015-02-15T14:00:00.015</startTime>
+<Author>ehandman</Author>
+<CategoryCode/>
+<CategoryFullName>CATEGORIES/ARCHIVE/מאלתרת</CategoryFullName>
+<CategoryId>32605</CategoryId>
+<CategoryLongName>מאלתרת</CategoryLongName>
+<CategoryName>מאלתרת</CategoryName>
+<CategoryShortName>מאלתרת</CategoryShortName>
+<InBlock>NO</InBlock>
+<Interface/>
+<ItemType>AudioTitle</ItemType>
+<Label></Label>
+<ProgramName>מאלתרת ש.ח. - חגית איזמן</ProgramName>
+<ProgramScheduledStartTime>2015-02-15T14:00:00.000</ProgramScheduledStartTime>
+<SoundFileName>\\hcomnas\RadioStorageF\Audio20\000C2503.wav</SoundFileName>
+<TitleComposer></TitleComposer>
+<TitleConductor></TitleConductor>
+<TitleOrchestra></TitleOrchestra>
+<Year>2015</Year>
+<albumName></albumName>
+<artistName/>
+<itemCode>680823</itemCode>
+<itemDuration>3599</itemDuration>
+<itemDurationMS>3599466</itemDurationMS>
+<itemId>288806:1000308423:5643134</itemId>
+<titleId>798037</titleId>
+<titleName>מאלתרת 13.2.15</titleName>
+<DJ>חגית איזמן</DJ>
+<GuestsKeyItems>חגית איזמן</GuestsKeyItems>
+<Transfer_Reporting>
+2015-02-14T15:50:57.000	Export-ehandman	Export	\\hcomnas\radiostoragef\FromDalet	8c46002e-b275-4aa5-8ca5-90dff9e529a3	OK
+</Transfer_Reporting>
+<Transfer_Reporting>
+2015-02-14T16:01:43.000	Export-nspira	Export	\\hcomnas\RadioStorageF\FromDalet	8c46002e-b275-4aa5-8ca5-90dff9e529a3	OK
+</Transfer_Reporting>
+<BroadcastDate>2015-02-13T00:00:00</BroadcastDate>
+<StationCode>S1</StationCode>
+<ScheduledPrograms>
+<ScheduledProgram>
+<ScheduledStationName>Radio IDC 1</ScheduledStationName>
+<ScheduledStationCode>S1</ScheduledStationCode>
+<ScheduledProgramName>כיסאות מוזיקליים- אדם שפיר</ScheduledProgramName>
+<ScheduledProgramScheduledStartTime>2015-02-15T13:00:00.000</ScheduledProgramScheduledStartTime>
+<ScheduledProgramDuration>3600</ScheduledProgramDuration>
+<ProgramStatus>PLAYED</ProgramStatus>
+<AssignedStudioName>studio13</AssignedStudioName>
+</ScheduledProgram>
+<ScheduledProgram>
+<ScheduledStationName>Radio IDC 1</ScheduledStationName>
+<ScheduledStationCode>S1</ScheduledStationCode>
+<ScheduledProgramName>מאלתרת ש.ח. - חגית איזמן</ScheduledProgramName>
+<ScheduledProgramScheduledStartTime>2015-02-15T14:00:00.000</ScheduledProgramScheduledStartTime>
+<ScheduledProgramDuration>3600</ScheduledProgramDuration>
+<ProgramStatus>LOADED</ProgramStatus>
+<AssignedStudioName>studio13</AssignedStudioName>
+</ScheduledProgram>
+<ScheduledProgram>
+<ScheduledStationName>Radio IDC 1</ScheduledStationName>
+<ScheduledStationCode>S1</ScheduledStationCode>
+<ScheduledProgramName>שירים על הספה ש.ח. - גיל מרקוביץ' וד"ר בעז בן דוד</ScheduledProgramName>
+<ScheduledProgramScheduledStartTime>2015-02-15T15:00:00.000</ScheduledProgramScheduledStartTime>
+<ScheduledProgramDuration>3600</ScheduledProgramDuration>
+<ProgramStatus>UNKNOWN</ProgramStatus>
+<AssignedStudioName>studio13</AssignedStudioName>
+</ScheduledProgram>
+</ScheduledPrograms>
+</Previous>
+<Current>
+<startTime>2015-02-15T14:00:27.343</startTime>
+<Author></Author>
+<CategoryCode/>
+<CategoryFullName>CATEGORIES/Jingles - ג'ינגלים/אותות לשידור חוזר</CategoryFullName>
+<CategoryId>8977</CategoryId>
+<CategoryLongName>אותות לשידור חוזר</CategoryLongName>
+<CategoryName>אותות לשידור חוזר</CategoryName>
+<CategoryShortName>אותות לשידור חוז</CategoryShortName>
+<InBlock>NO</InBlock>
+<Interface/>
+<ItemType>VoiceInsert</ItemType>
+<Label></Label>
+<ProgramName>מאלתרת ש.ח. - חגית איזמן</ProgramName>
+<ProgramScheduledStartTime>2015-02-15T14:00:00.000</ProgramScheduledStartTime>
+<SoundFileName>\\hcomnas\RadioStorageF\Audio16\000A213A.wav</SoundFileName>
+<TitleComposer></TitleComposer>
+<TitleConductor></TitleConductor>
+<TitleOrchestra></TitleOrchestra>
+<Year>2014</Year>
+<albumName></albumName>
+<artistName/>
+<itemCode>24b9a60b-beec-45bf-af09-ff4a19e3ad0a</itemCode>
+<itemDuration>2</itemDuration>
+<itemDurationMS>2694</itemDurationMS>
+<itemId>288806:1000308423:5643134:1</itemId>
+<titleId>665834</titleId>
+<titleName>second</titleName>
+<XMP>
+<BWFMetaData description="" fileName="\\hcomnas\RadioStorageF\procoder\to\אקפלה.wav" originator="Pro Tools"/>
+</XMP>
+<StationCode>S1</StationCode>
+<ScheduledPrograms>
+<ScheduledProgram>
+<ScheduledStationName>Radio IDC 1</ScheduledStationName>
+<ScheduledStationCode>S1</ScheduledStationCode>
+<ScheduledProgramName>כיסאות מוזיקליים- אדם שפיר</ScheduledProgramName>
+<ScheduledProgramScheduledStartTime>2015-02-15T13:00:00.000</ScheduledProgramScheduledStartTime>
+<ScheduledProgramDuration>3600</ScheduledProgramDuration>
+<ProgramStatus>PLAYED</ProgramStatus>
+<AssignedStudioName>studio13</AssignedStudioName>
+</ScheduledProgram>
+<ScheduledProgram>
+<ScheduledStationName>Radio IDC 1</ScheduledStationName>
+<ScheduledStationCode>S1</ScheduledStationCode>
+<ScheduledProgramName>מאלתרת ש.ח. - חגית איזמן</ScheduledProgramName>
+<ScheduledProgramScheduledStartTime>2015-02-15T14:00:00.000</ScheduledProgramScheduledStartTime>
+<ScheduledProgramDuration>3600</ScheduledProgramDuration>
+<ProgramStatus>LOADED</ProgramStatus>
+<AssignedStudioName>studio13</AssignedStudioName>
+</ScheduledProgram>
+<ScheduledProgram>
+<ScheduledStationName>Radio IDC 1</ScheduledStationName>
+<ScheduledStationCode>S1</ScheduledStationCode>
+<ScheduledProgramName>שירים על הספה ש.ח. - גיל מרקוביץ' וד"ר בעז בן דוד</ScheduledProgramName>
+<ScheduledProgramScheduledStartTime>2015-02-15T15:00:00.000</ScheduledProgramScheduledStartTime>
+<ScheduledProgramDuration>3600</ScheduledProgramDuration>
+<ProgramStatus>UNKNOWN</ProgramStatus>
+<AssignedStudioName>studio13</AssignedStudioName>
+</ScheduledProgram>
+</ScheduledPrograms>
+</Current>
+<Next>
+<startTime>2015-02-15T14:59:56.171</startTime>
+<Author>dalet_admin</Author>
+<CategoryCode/>
+<CategoryFullName>CATEGORIES/Jingles - ג'ינגלים/אותות לשידור חוזר</CategoryFullName>
+<CategoryId>8977</CategoryId>
+<CategoryLongName>אותות לשידור חוזר</CategoryLongName>
+<CategoryName>אותות לשידור חוזר</CategoryName>
+<CategoryShortName>אותות לשידור חוז</CategoryShortName>
+<InBlock>NO</InBlock>
+<Interface/>
+<ItemType>AudioTitle</ItemType>
+<Label></Label>
+<ProgramName>מאלתרת ש.ח. - חגית איזמן</ProgramName>
+<ProgramScheduledStartTime>2015-02-15T14:00:00.000</ProgramScheduledStartTime>
+<SoundFileName>\\hcomnas\RadioDPShare\Storage\Audio\0001DA55.wav</SoundFileName>
+<TitleComposer></TitleComposer>
+<TitleConductor></TitleConductor>
+<TitleOrchestra></TitleOrchestra>
+<Year>2009</Year>
+<albumName></albumName>
+<artistName/>
+<itemCode>121818</itemCode>
+<itemDuration>4</itemDuration>
+<itemDurationMS>4296</itemDurationMS>
+<itemId>288806:1000308423:5643135</itemId>
+<titleId>122140</titleId>
+<titleName>סיום</titleName>
+<StationCode>S1</StationCode>
+<ScheduledPrograms>
+<ScheduledProgram>
+<ScheduledStationName>Radio IDC 1</ScheduledStationName>
+<ScheduledStationCode>S1</ScheduledStationCode>
+<ScheduledProgramName>כיסאות מוזיקליים- אדם שפיר</ScheduledProgramName>
+<ScheduledProgramScheduledStartTime>2015-02-15T13:00:00.000</ScheduledProgramScheduledStartTime>
+<ScheduledProgramDuration>3600</ScheduledProgramDuration>
+<ProgramStatus>PLAYED</ProgramStatus>
+<AssignedStudioName>studio13</AssignedStudioName>
+</ScheduledProgram>
+<ScheduledProgram>
+<ScheduledStationName>Radio IDC 1</ScheduledStationName>
+<ScheduledStationCode>S1</ScheduledStationCode>
+<ScheduledProgramName>מאלתרת ש.ח. - חגית איזמן</ScheduledProgramName>
+<ScheduledProgramScheduledStartTime>2015-02-15T14:00:00.000</ScheduledProgramScheduledStartTime>
+<ScheduledProgramDuration>3600</ScheduledProgramDuration>
+<ProgramStatus>LOADED</ProgramStatus>
+<AssignedStudioName>studio13</AssignedStudioName>
+</ScheduledProgram>
+<ScheduledProgram>
+<ScheduledStationName>Radio IDC 1</ScheduledStationName>
+<ScheduledStationCode>S1</ScheduledStationCode>
+<ScheduledProgramName>שירים על הספה ש.ח. - גיל מרקוביץ' וד"ר בעז בן דוד</ScheduledProgramName>
+<ScheduledProgramScheduledStartTime>2015-02-15T15:00:00.000</ScheduledProgramScheduledStartTime>
+<ScheduledProgramDuration>3600</ScheduledProgramDuration>
+<ProgramStatus>UNKNOWN</ProgramStatus>
+<AssignedStudioName>studio13</AssignedStudioName>
+</ScheduledProgram>
+</ScheduledPrograms>
+</Next>
+</BroadcastMonitor>

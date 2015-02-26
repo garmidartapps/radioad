@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Radio Station</title>
@@ -8,8 +8,10 @@
 <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
-	
+
+
 <div id="container">
+
   <!-- Start of Page Header -->
   <div id="page_header">
     <h1><span>Radio Station</span></h1>
@@ -33,32 +35,39 @@
   <div id="main_content">
     <div id="main_content2">
       <div id="main_content_header">
-        <h2>Featured Band: The Black Eyed Peas</h2>
+       <h2></h2><button type="button"><a id="purchase"/></button></h2>
       </div>
       <div id="main_content_body">
         <div id="content_box">
-          <div class="thumbnail"><img src="images/main_thumbnail.gif" width="379" height="177" alt="Thumbnail Caption" /></div>
-          <p> This is a template designed by free website templates for you for free you can replace all the text by your own text. This is just a place holder so you can see how the site would look like. </p>
-          <p> If you're having problems editing the template please don't hesitate to ask for help on the forum. You will get help as soon as possible. You can also use the forum to tell us what you like or dislike and what you would like to see more. </p>
-          <p> Your feedback is very important to us and we will do everything to fulfil your wishes. <a href="http://all-free-download.com/free-website-templates/">more...</a> </p>
+          <div id="loading"/>
         </div>
+       </div>
       </div>
       <div id="main_content_footer">&nbsp;</div>
     </div>
   </div>
+
   <!-- End of Main Content -->
   <!-- Start of Breaking News -->
   <div id="breaking_news">
     <div id="breaking_news_header">
-      <h2>Breaking News</h2>
+      <!-- <h2>Breaking News</h2> -->
     </div>
-    <div id="loading">
-      <!--<div class="thumbnail"><img src="images/news_thumbnail.gif" width="250" height="126" alt="Thumbnail Caption" /></div>  -->
-	
-    </div>
+    <!-- <div id="photo">
+      <script type="text/javascript">var cstrpuid = 238657;var cstrpwidth = "300";var cstrpheight = "200";</script>
+      <!-- old player 
+<script type="text/javascript" src="http://cdn.caster.fm/0070B7/widgets/player.js"></script>
+<!--   DO NOT REMOVE THE LINKS BELOW, THEY  WILL BE HIDDEN (AND WILL HELP US A LOT)   -- >
+<a id="cstrplb" href="http://www.caster.fm/">Free Shoutcast Hosting</a><a id="cstrplb2" href="http://www.caster.fm/">Radio Stream Hosting</a>
+<div id="cstrpdiv"></div>
+    </div> 
+
     <div id="breaking_news_footer">&nbsp;</div>
-  </div>
+  </div> -->
   <!-- End of Breaking News -->
+  <!-- new player -->
+<audio controls src="http://50.22.217.113:32684/;"></audio> 
+ </div>
   <div class="clearthis">&nbsp;</div>
   <!-- Start of Page Footer -->
   <div id="page_footer"> Web design by <a href="http://www.freewebsitetemplates.com/">Free Website Templates</a> </div>
@@ -67,7 +76,7 @@
 <div align=center>This template  downloaded form <a href='http://all-free-download.com/free-website-templates/'>free website templates</a></div>
 <script>
 			// add loading image to div
-		//	$('#loading').html('<div class="thumbnail"><img src="images/news_thumbnail.gif" width="250" height="126" alt="Thumbnail Caption" />');
+		//	$('#loading').html('<div class="thumbnhttp://spotlement.listen2myradio.com/ail"><img src="images/news_thumbnail.gif" width="250" height="126" alt="Thumbnail Caption" />');
 			//jQuery("loading").LoadDefault();
 			//$('<img src="images/news_thumbnail.gif" width="250" height="126">').appendTo(".loading");
 			// run ajax request
@@ -82,16 +91,25 @@
 			});*/
 			var socket = io.connect();
 			socket.on('connect', function () {
-          	$('#loading').html('<div class="thumbnail"><img src="images/news_thumbnail.gif" width="250" height="126" alt="Thumbnail Caption" />');
+          	$('#loading').html('<div class="thumbnail"><img src="images/main_thumbnail.png" alt="Thumbnail Caption" />');
+          //	 $('#purchase').html('<a href="http://www.walla.co.il"><strong>BUY A TICKET</strong></a>');
           	socket.emit('stationId',134);
         });
         socket.on('update', function(data) {
-          alert(data);
+          //alert(data);
             $('#loading').html(data);
+        });
+        socket.on('updateLoop', function(data) {
+        //  alert(data);
+          $('#loading').html(data);
+         
+            
+        });
+        socket.on('button', function(data) {
+            $('#purchase').html('<a href="' + data + '"><strong style="font-size: 25px;">GO</strong></a>');
         });
 		
 		</script>
-
+ 
 </body>
 </html>
-{"filter

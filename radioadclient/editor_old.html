@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Radio Station</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" />
+<script src="jquery-1.11.1.js"></script>
+<script src="spotty.js"></script>
+<script type="text/javascript" src="tinymce/tinymce.min.js"></script>
+<script type="text/javascript">
+tinymce.init({
+    selector: "textarea",
+	  plugins: ["image",
+	  "link"],
+    image_class_list: [
+        {title: 'None', value: ''}
+    ]
+ });
+
+function doRequest(url) {
+
+    // Create the XHR object.
+    var xhr = new XMLHttpRequest();
+    if ("withCredentials" in xhr) {
+        // XHR for Chrome/Firefox/Opera/Safari.
+        xhr.open('get', url, true);
+    }else if(typeof XDomainRequest != "undefined") {
+        // XDomainRequest for IE.
+        xhr = new XDomainRequest();
+        xhr.open('get', url);
+    }else{
+        // CORS not supported.
+        xhr = null;
+    };
+
+    if (!xhr) {
+        return;
+    };
+
+    // Response handlers.
+    xhr.onload = function() {
+        //do what you want with the response. Remember to use xhr.responseText for ie8 compatibility, because it doesn't have .responseXML
+        if(xhr.responseXML) {
+            xml = this.responseXML;
+            alert(xml);
+        }else if(xhr.responseText){
+            xml.loadXML(xhr.responseText);
+        };
+    };
+
+    xhr.onerror = function(ex) {
+       alert(ex);
+        //do what you want on error
+    };
+
+    //these blank handlers need to be set to fix ie9 http://cypressnorth.com/programming/internet-explorer-aborting-ajax-requests-fixed/
+    xhr.onprogress = function () { };
+    xhr.ontimeout = function () { };
+
+    //do it, wrapped in timeout to fix ie9
+    setTimeout(function () {
+                xhr.send();
+            }, 0);
+
+};
+
+
+
+ function submitForm() {
+/* $.get("http://www.interweb.idc.ac.il/radioidc1.xml")
+.done(function (xml){
+  alert(xml);
+  var clientid = $(xml).find('client_id').first().text();
+  alert(clientid);
+});*/
+//jQuery.support.cors = true;
+/*$.ajaxSetup({accepts:'text/xml',cache:false});
+$.ajax({
+    url: "http://www.interweb.idc.ac.il/radioidc1.xml",
+    type: "GET",
+    dataType: "jsonp xml", // "xml", "json"
+    contentType: 'text/xml',
+    mimeType: 'text/xml',
+    crossDomain: true,
+     jsonpCallback: "data",
+    success: function(data) {
+        // show text reply as-is (debug)
+        alert(JSON.stringify(data));
+
+        // show xml field values (debug)
+        //alert( $(data).find("title").text() );
+
+        // loop JSON array (debug)
+        //var str="";
+        //$.each(data.items, function(i,item) {
+        //  str += item.title + "\n";
+        //});
+        //alert(str);
+    },
+    error: function(jqXHR, textStatus, ex) {
+        alert(textStatus + "," + ex + "," + jqXHR.responseText);
+    }
+});*/
+//sample site that returns xml
+site = 'http://www.interweb.idc.ac.il/radioidc1.xml';
+
+
+var yql = 'http://query.yahooapis.com/v1/public/yql?q=' + encodeURIComponent('select * from xml where url="' + site + '"') + '&format=xml&callback=?';
+
+// Request that YSQL string, and run a callback function.
+// Pass a defined function to prevent cache-busting.
+$.getJSON(yql, function (data) {
+    alert(data.results[0]);
+});
+ tinymce.triggerSave();
+ console.log(tinymce.get('question_text').getContent() + "trigger");
+ var xmlhttp = new XMLHttpRequest();
+ xmlhttp.open("POST","html",true);
+ xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+ xmlhttp.send("html="+tinymce.get('question_text').getContent());
+};
+</script>
+<link rel="stylesheet" href="spotty.css" type="text/css"/>
+</head>
+<body>
+<!-- "//www.spot.im/embed/scripts/launcher.js" -->
+<div id="container">
+
+  <!-- Start of Page Header -->
+  <div id="page_header">
+    <h1><span>Radio Station</span></h1>
+  </div>
+  <!-- End of Page Header -->
+  <!-- Start of Navigation Menu -- >
+  <div id="navmenu">
+    <ul>
+      <li id="menu_first"><a href="http://all-free-download.com/free-website-templates/"><strong>Home</strong></a></li>
+      <li><a href="http://all-free-download.com/free-website-templates/"><strong>Featured Bands</strong></a></li>
+      <li><a href="http://all-free-download.com/free-website-templates/"><strong>Playlist</strong></a></li>
+      <li><a href="http://all-free-download.com/free-website-templates/"><strong>Partners</strong></a></li>
+      <li><a href="http://all-free-download.com/free-website-templates/"><strong>About Us</strong></a></li>
+      <li id="menu_last"><a href="http://all-free-download.com/free-website-templates/"><strong>Contact Us</strong></a></li>
+    </ul>
+    <div class="clearthis">&nbsp;</div>
+  </div> -->
+  <!-- End of Navigation Menu -->
+  <div id="page_static">&nbsp;</div>
+  <!-- Start of Main Content -->
+  <div id="main_content">
+    <div id="main_content2">
+      <div id="main_content_header">
+       <h2></h2><button type="button"><a id="purchase"/></button></h2>
+      </div>
+      <div id="main_content_body">
+        <div id="content_box">
+          <div id="loading"/>
+        </div>
+       </div>
+      </div>
+      <div id="main_content_footer">&nbsp;</div>
+    </div>
+  </div>
+  <form id="myForm" method="post">
+    <textarea name="question_text" id="question_text"></textarea>
+	<input type="hidden" id="question_html" name="question_html" />
+	<a href="javascript:submitForm();">Submit Form</a>
+</form>
+
+  <!-- End of Main Content -->
+  <!-- Start of Breaking News -- >
+  <div id="breaking_news">
+    <div id="breaking_news_header">
+      <h2>Breaking News</h2>
+    </div>
+    <div id="photo"> -->
+ <!--     <script type="
+ text/javascript">var cstrpuid = 238657;var cstrpwidth = "300";var cstrpheight = "200";</script>
+<script type="text/javascript" src="http://cdn.caster.fm/0070B7/widgets/player.js"></script>
+<!--   DO NOT REMOVE THE LINKS BELOW, THEY  WILL BE HIDDEN (AND WILL HELP US A LOT)   -- >
+<a id="cstrplb" href="http://www.caster.fm/">Free Shoutcast Hosting</a><a id="cstrplb2" href="http://www.caster.fm/">Radio Stream Hosting</a>
+<div id="cstrpdiv"></div>
+    </div> -->
+    <div id="breaking_news_footer">&nbsp;</div>
+  </div>
+  <!-- End of Breaking News -->
+  <div class="clearthis">&nbsp;</div>
+  <!-- Start of Page Footer -->
+
+<!-- script>
+			// add loading image to div
+		//	$('#loading').html('<div class="thumbnail"><img src="images/news_thumbnail.gif" width="250" height="126" alt="Thumbnail Caption" />');
+			//jQuery("loading").LoadDefault();
+			//$('<img src="images/news_thumbnail.gif" width="250" height="126">').appendTo(".loading");
+			// run ajax request
+		/*	$.ajax({
+				type: "GET",
+				dataType: "json",
+				url: "http://localhost:8080/banner/1",
+				success: function (d) {
+					// replace div's content with returned data
+					$('#loading').html(d);
+				}
+			});*/
+			var socket = io.connect();
+			socket.on('connect', function () {
+          	$('#loading').html('<div class="thumbnail"><img src="images/main_thumbnail.png" alt="Thumbnail Caption" />');
+          //	 $('#purchase').html('<a href="http://www.walla.co.il"><strong>BUY A TICKET</strong></a>');
+          	socket.emit('stationId',134);
+        });
+        socket.on('update', function(data) {
+          //alert(data);
+            $('#loading').html(data);
+        });
+        socket.on('updateLoop', function(data) {
+        //  alert(data);
+          $('#loading').html(data);
+         
+            
+        });
+        socket.on('button', function(data) {
+            $('#purchase').html('<a href="' + data + '"><strong style="font-size: 25px;">GO</strong></a>');
+        });
+		
+		</script -->
+ 
+</body>
+</html>

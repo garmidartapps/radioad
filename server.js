@@ -18,7 +18,7 @@ var path = require('path');
 // configuration ===============================================================
 mongoose.connect(configDB.url); // connect to our database
 
-require('./config/passport')(passport); // pass passport for configuration
+require('./config/passport')(passport); // pjavaass passport for configuration
 
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
@@ -31,10 +31,10 @@ app.use(bodyParser()); // get information from html forms
 //app.use( bodyParser.urlencoded() ); // to support URL-encoded bodies
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 app.set('view engine', 'ejs'); // set up ejs for templating
 
@@ -72,11 +72,15 @@ var io = socketio.listen(server);
 io.sockets.on('connection', function(socket)
 {
   console.log(socket);
-  socket.emit('connect', 'hello world');
+  //socket.emit('connect', 'hello world');
   socket.on('stationId',function(data)
   {
   	socket.stationId = data;
   	console.log(data);
+  	if(data == '135')
+  	{
+  	   var socketHandler = require('./app/socketHandler.js')(app, io, socket);
+  	}
   });
 });
 var routes = require('./app/routes.js')(app, passport, bodyParser(), io); // load our routes and pass in our app and fully configured passport

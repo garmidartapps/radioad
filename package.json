@@ -23,6 +23,8 @@
 	"connect":"*",
 	"socket.io":"*",
 	"http":"*",
-	"path" : "*"
+	"path" : "*",
+	"xml2js" :"*",
+	"yql" : "*"
   }
 }
